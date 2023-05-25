@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class FilmController {
 
-    private HashMap<Integer,Film> films = new HashMap();
+    private final HashMap<Integer,Film> films = new HashMap<>();
     private int idMaker = 1;
 
     @PostMapping
