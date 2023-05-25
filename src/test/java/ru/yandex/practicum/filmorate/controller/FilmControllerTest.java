@@ -21,7 +21,7 @@ class FilmControllerTest {
                 .id(1)
                 .description("Description")
                 .releaseDate(LocalDate.now())
-                .duration(Duration.ofHours(3))
+                .duration(3)
                 .build();
     }
     @Test
@@ -48,7 +48,7 @@ class FilmControllerTest {
 
         @Test
         void validateTestWithNegativeDuration() {
-            film.setDuration(Duration.ofHours(-1));
+            film.setDuration(-1);
             assertThrows(ValidationException.class, () -> new FilmController().validate(film));
         }
 }
