@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FilmControllerTest {
+public class FilmControllerTest {
 
     Film film;
 
@@ -25,9 +25,14 @@ class FilmControllerTest {
     }
 
     @Test
+    void validateTest() {
+        assertDoesNotThrow(() -> new FilmController().validate(film));
+    }
+
+    @Test
     void validateTestWithEmptyName() {
         film.setName("  ");
-        assertThrows(ValidationException.class, () -> new FilmController().validate(film));
+        assertValidationException(film);
     }
 
     @Test
@@ -37,18 +42,22 @@ class FilmControllerTest {
             s += "1";
         }
         film.setDescription(s);
-        assertThrows(ValidationException.class, () -> new FilmController().validate(film));
+        assertValidationException(film);
     }
 
     @Test
     void validateTestWithToOldDate() {
         film.setReleaseDate(LocalDate.of(1895, 12, 27));
-        assertThrows(ValidationException.class, () -> new FilmController().validate(film));
+        assertValidationException(film);
     }
 
-        @Test
-        void validateTestWithNegativeDuration() {
-            film.setDuration(-1);
-            assertThrows(ValidationException.class, () -> new FilmController().validate(film));
-        }
+    @Test
+    void validateTestWithNegativeDuration() {
+        film.setDuration(-1);
+        assertValidationException(film);
+    }
+
+    private void assertValidationException(Film film) {
+        assertThrows(ValidationException.class, () -> new FilmController().validate(film));
+    }
 }
